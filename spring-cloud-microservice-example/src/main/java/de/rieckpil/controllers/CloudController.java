@@ -32,5 +32,5 @@ public class CloudController {
         // return "RANDOM WORD: " + getWord("STRING-GENERATOR-MICROSERVICE");
         return cloudService.getRandomWord();
     }
-    
+
 }
