@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.springframework.org/schema/mvc">
 <head>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
@@ -9,11 +9,7 @@
     <div class="starter-template">
         <h1>Dynamically Generated Sentence</h1>
         <p class="lead">A sentence goes here:
-            <span id="subject"/>
-            <span id="verb"/>
-            <span id="article"/>
-            <span id="adjective"/>
-            <span id="noun"/>
+            <span id="sentence"/>
         </p>
     </div>
     <div id="error" class="text-danger">
@@ -28,56 +24,22 @@
 <script type="text/javascript">
 
     //	TODO: Alter this prefix when instructed.
-    var prefix = "";
+    var prefix = "http://localhost:8080/api";
     // Perform AJAX requests...
-    $.getJSON(prefix + "/subject",   null, displaySubject)  .fail(displayErrorSubject);
-    $.getJSON(prefix + "/verb",      null, displayVerb)     .fail(displayErrorVerb);
-    $.getJSON(prefix + "/article",   null, displayArticle)  .fail(displayErrorArticle);
-    $.getJSON(prefix + "/adjective", null, displayAdjective).fail(displayErrorAdjective);
-    $.getJSON(prefix + "/noun",      null, displayNoun)     .fail(displayErrorNoun);
+    $.getJSON(prefix + "/string-generator-microservice/",   null, displaySentence).fail(displayErrorSentence);
 
     //	Handle Success:
-    function displaySubject(results) {
-        $("#subject").html(results.word);
+    function displaySentence(results) {
+        $("#sentence").html(results);
     }
 
-    function displayVerb(results) {
-        $("#verb").html(results.word);
-    }
-
-    function displayArticle(results) {
-        $("#article").html(results.word);
-    }
-
-    function displayAdjective(results) {
-        $("#adjective").html(results.word);
-    }
-
-    function displayNoun(results) {
-        $("#noun").html(results.word);
-    }
 
     //	Handle Errors:
 
-    function displayErrorSubject(x, s, m) {
-        err(x, s, m, "subject");
+    function displayErrorSentence(x, s, m) {
+        err(x, s, m, "sentence");
     }
 
-    function displayErrorVerb(x, s, m) {
-        err(x, s, m, "verb");
-    }
-
-    function displayErrorArticle(x, s, m) {
-        err(x, s, m, "article");
-    }
-
-    function displayErrorAdjective(x, s, m) {
-        err(x, s, m, "adjective");
-    }
-
-    function displayErrorNoun(x, s, m) {
-        err(x, s, m, "noun");
-    }
 
     // Dsiplay text of AJAX error message using a hidden div
     function err(xhr, status, msg, prefix) {
